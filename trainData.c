@@ -22,7 +22,7 @@ void trainData(int *trainingPercentage, FEATINPUT *trainingFeature, int *trainin
 //Check if feature 1 array have any 0 values
     if(pcond_discrete_normal[0][0]==0 || pcond_discrete_normal[0][1]==0 || pcond_discrete_normal[0][2]==0 || pcond_discrete_normal[0][3]==0 || pcond_discrete_altered[0][0]==0 || pcond_discrete_altered[0][1]==0 || pcond_discrete_altered[0][2]==0 || pcond_discrete_altered[0][3]==0)
     {
-        // If yes go to laplace smoothening function
+        // If yes go to laplace smoothing function
         laplace(pcond_discrete_normal,0,4,p_semendiagtotal,NORMAL);
         laplace(pcond_discrete_altered,0,4,p_semendiagtotal,ALTERED);
     }
