@@ -138,13 +138,14 @@ void nozeroprob(double pcond_discrete[][MAXDATAREP], int pcond_rownum, int datar
 
 void geterror(int *predictedY, int *output, int *trainingpercentage, double *errorprob_dataset)
 {
-    *errorprob_dataset = 0;
-    for(int i=0;i<=(*trainingpercentage-1);i++)
+    //predictedY = Predicted Output Array || output = Real Output Array || trainingpercentage = total count of elements in current dataset || errorprob_dataset = errorprobability of dataset
+    *errorprob_dataset = 0; //set error probability to 0
+    for(int i=0;i<=(*trainingpercentage-1);i++) // calculate the amount of times where Predicted Output not equals to Real Output for all the elements in current dataset
     {
         if(predictedY[i]!=output[i])
         {
              *errorprob_dataset += 1;
         }
     }
-    *errorprob_dataset /= *trainingpercentage;
+    *errorprob_dataset /= *trainingpercentage; //total number of mismatchs/ total size of current dataset = erroprobability of the dataset
 }
