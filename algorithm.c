@@ -2,44 +2,52 @@
 #include <math.h>
 #include "naiveBayes.h"
 
+//conditional probability first loop
 void condprob_firstloop(FEATINPUT *datarep_discfeat, double pcond_discrete_normal[][MAXDATAREP], double pcond_discrete_altered[][MAXDATAREP], FEATINPUT *trainingFeature,int *trainingOutput, int *i, int p_semendiagtotal[], double mean[][2], int matched[])
 {
-    //1. counted all numerators for discrete features 
-    //2. sum all numerators for prior probability - p_semendiagtotal
-    //3. sum all numerators for mean 
-    int m;
+    /***************************************************************
+    1. counted all numerators for discrete feature 1,3-8 conditional probabilities 
+    2. sum all numerators for prior probability - p_semendiagtotal
+    3. sum all numerators for mean
+    ***************************************************************/
+
+    int m;  //counter m
     
+    //call match_indicator
     match_indicator(matched,trainingFeature,i,datarep_discfeat);
 
     if (trainingOutput[*i]==NORMAL)
     {
-        for(m=0;m<=DISCFEATNUM-1;++m)
+        for(m=0;m<=DISCFEATNUM-1;++m)   //for 7 discrete feature conditional probabilities
         {
-            pcond_discrete_normal[m][matched[m]]+=1;
+            /*count all 7 matched discrete feature of current patient's row iterated which are NORMAL in conditional prob array*/
+            pcond_discrete_normal[m][matched[m]]+=1;    
         }
-        p_semendiagtotal[0]+=1;
+
+        p_semendiagtotal[NORMAL]+=1;     //cal total actual normal outcome
         
-        mean[NORMAL][0] += (trainingFeature+*i)->f2;
-        mean[NORMAL][1] += (trainingFeature+*i)->f9;
+        mean[NORMAL][0] += (trainingFeature+*i)->f2;    //sum mean numerator for feature 2 normal
+        mean[NORMAL][1] += (trainingFeature+*i)->f9;    //sum mean numerator for feature 9 normal
     }
     else    //==ALTERED
     {
         for(m=0;m<=DISCFEATNUM-1;++m)
         {
-            pcond_discrete_altered[m][matched[m]]+=1;
+            /*count all 7 matched discrete feature of current patient's row iterated which are ALTERED in conditional prob array*/
+            pcond_discrete_altered[m][matched[m]]+=1; 
         }
-        p_semendiagtotal[1]+=1;
-        mean[ALTERED][0] += (trainingFeature+*i)->f2;
-        mean[ALTERED][1] += (trainingFeature+*i)->f9;
+
+        p_semendiagtotal[ALTERED]+=1;    //cal total actual normal outcome
+
+        mean[ALTERED][0] += (trainingFeature+*i)->f2;   //sum mean numerator for feature 2 altered
+        mean[ALTERED][1] += (trainingFeature+*i)->f9;   //sum mean numerator for feature 9 altered
     }
 }
 
+//conditional probability second loop
 void condprob_secondloop(double mean[][2], double variance[][2], int *i, FEATINPUT *trainingFeature, int *trainingOutput)
 {
-    //1. divide all numerators for discrete features by p_semendiagtotal
-    //2. divide all numerators for mean by p_semendiagtotal
-    //3. calculate prior probability -> p_prior_semdiag=p_semendiagtotal/trainingPercentage
-    //4. calculate variance
+    /*calculate sum of all numerators for variance*/
 
     if (trainingOutput[*i]==NORMAL)
     {
@@ -59,21 +67,21 @@ void match_indicator(int matched[], FEATINPUT *datasetFeature, int *i, FEATINPUT
     int matched_all=0;
     int check_match[DISCFEATNUM]={0};
 
-    //check against datarep
+    //check if all 7 matches are found for discrete feature 1,3-8
     while(matched_all<=DISCFEATNUM-1)
     {
-        //datasetFeature[rownumofsize].f1==discfeature_datarep[datarep->e.g. w,s,s,f].f1
+        //check if match is done already //check if training/testing dataset each patient's 7 feature match with data rep struct array
         if (check_match[0]==0 && (datasetFeature+*i)->f1==(datarep_discfeat+d_indicator)->f1)
         {
-            matched[0]=d_indicator;
-            check_match[0]+=1;
-            matched_all+=1;
+            matched[0]=d_indicator;     //store index of feature data rep
+            check_match[0]+=1;          //matched f1 for if condition
+            matched_all+=1;             //matched f1 for total counting while loop
         }
         if (check_match[1]==0 && (datasetFeature+*i)->f3==(datarep_discfeat+d_indicator)->f3)
         {
-            matched[1]=d_indicator;
-            check_match[1]+=1;
-            matched_all+=1;
+            matched[1]=d_indicator;     //store index of feature data rep
+            check_match[1]+=1;          //matched f2 for if condition
+            matched_all+=1;             //matched f2 for total counting while loop
         }
         if (check_match[2]==0 && (datasetFeature+*i)->f4==(datarep_discfeat+d_indicator)->f4)
         {
@@ -105,7 +113,7 @@ void match_indicator(int matched[], FEATINPUT *datasetFeature, int *i, FEATINPUT
             check_match[6]+=1;
             matched_all+=1;
         }
-        d_indicator+=1;
+        d_indicator+=1;     //iterating data rep struct array for matching
     }
 }
 /* Laplace smoothing function where we add 1 to everything for normal and divide by the total number of normal plus the number of 1s added in to get the conditional probability*/

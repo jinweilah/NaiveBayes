@@ -22,45 +22,57 @@ void predictData(int *datasetPercentage, FEATINPUT *datasetFeature, int *dataset
 
     for(i=0; i<=*datasetPercentage-1;++i)
     {
-        postprob_normal_train[i]=1;
-        postprob_altered_train[i]=1;
+        postprob_normal_train[i]=1;     //initilize posterior probability to 1
+        postprob_altered_train[i]=1;    
+
+        //call match indicator for computation of posterior probability for the current patient's row iterated
         match_indicator(matched,datasetFeature,&i,datarep_discfeat); 
    
+        //iterate all matched conditional probabilities for 7 discrete feature
         for(m=0;m<=DISCFEATNUM-1;++m)
         {
+            //computing posterior probalility prediction for matched 7 discrete feature into posterior prob array for normal
             postprob_normal_train[i]*=pcond_discrete_normal[m][matched[m]];
         }
 
         for(m=0;m<=DISCFEATNUM-1;++m)
         {
+            //computing posterior probalility prediction for matched 7 discrete feature into posterior prob array for normal
             postprob_altered_train[i]*=pcond_discrete_altered[m][matched[m]];
         }
-/* Using standard gaussian distribution to get conditional probability of feature 2 (Normal) */
+
+        /* Using standard gaussian distribution to get conditional probability of feature 2 (Normal) */
         zscore = (((datasetFeature+i)->f2- mean[NORMAL][0])/(sqrt(variance[NORMAL][0])));
-/* Multipy in the feature 2 (Normal) conditional probability into the posterior probability (Normal) */
+        /* Multipy in the feature 2 (Normal) conditional probability into the posterior probability (Normal) */
         postprob_normal_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
-/* Using standard gaussian distribution to get conditional probability of feature 9 (Normal) */       
+        /* Using standard gaussian distribution to get conditional probability of feature 9 (Normal) */       
         zscore = (((datasetFeature+i)->f9- mean[NORMAL][1])/(sqrt(variance[NORMAL][1])));
-/* Multipy in the feature 9 (Normal) conditional probability into the posterior probability (Normal) */
+        /* Multipy in the feature 9 (Normal) conditional probability into the posterior probability (Normal) */
         postprob_normal_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
-/* Multipy in the Normal prior probability into the posterior probability (Normal) */
+
+        /* Multipy in the Normal prior probability into the posterior probability (Normal) */
         postprob_normal_train[i]*= pprior_semendiag[NORMAL];
-/* Using standard gaussian distribution to get conditional probability of feature 2 (Altered) */
+
+        /* Using standard gaussian distribution to get conditional probability of feature 2 (Altered) */
         zscore = (((datasetFeature+i)->f2- mean[ALTERED][0])/(sqrt(variance[ALTERED][0])));
-/* Multipy in the feature 2 (Altered) conditional probability into the posterior probability (Altered) */
+        /* Multipy in the feature 2 (Altered) conditional probability into the posterior probability (Altered) */
         postprob_altered_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
-/* Using standard gaussian distribution to get conditional probability of feature 9 (Altered) */
+        /* Using standard gaussian distribution to get conditional probability of feature 9 (Altered) */
         zscore = (((datasetFeature+i)->f9- mean[ALTERED][1])/(sqrt(variance[ALTERED][1])));
-/* Multipy in the feature 9 (Altered) conditional probability into the posterior probability (Altered) */
+        /* Multipy in the feature 9 (Altered) conditional probability into the posterior probability (Altered) */
         postprob_altered_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
-/* Multipy in the Altered prior probability into the posterior probability (Altered) */
+
+        /* Multipy in the Altered prior probability into the posterior probability (Altered) */
         postprob_altered_train[i]*= pprior_semendiag[ALTERED];
-/* Log base e the posterior probability to prevent underflow for Normal and Altered */
+
+        /* Log base e the posterior probability to prevent underflow for Normal and Altered */
         log(postprob_normal_train[i]);
         log(postprob_altered_train[i]);
-/* Compare the difference of posterior probability for Normal and Altered */
+
+        /* Compare the difference of posterior probability for Normal and Altered */
         diff = postprob_normal_train[i] - postprob_altered_train[i];
-/* If difference more than or equal to 0 put value 0 into the predictedY array else put value 1 */
+
+        /* If difference more than or equal to 0 put value 0 into the predictedY array else put value 1 */
         if(diff >= 0)
         {
             predictedY[i]=0;
@@ -70,11 +82,14 @@ void predictData(int *datasetPercentage, FEATINPUT *datasetFeature, int *dataset
             predictedY[i]=1;
         }
     }
-/* Go to geterror function to get the error probability */
+
+    /* Go to geterror function to get the error probability */
     geterror(predictedY,datasetOutput,datasetPercentage,errorprob_dataset);
-/* Go to confMatrixFunc function get get the confusion matrix table */
+
+    /* Go to confMatrixFunc function get get the confusion matrix table */
     confMatrixFunc(predictedY,datasetOutput,confusionMatrix,datasetPercentage);
-/* Free the calloc allocated memory */
+    
+    /* Free the calloc allocated memory */
     free(postprob_normal_train);
     free(postprob_altered_train);
     free(predictedY);

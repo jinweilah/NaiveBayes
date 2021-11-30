@@ -3,12 +3,20 @@
 
 void trainData(int *trainingPercentage, FEATINPUT *trainingFeature, int *trainingOutput, double mean[][2], double variance[][2], FEATINPUT *datarep_discfeat, double pcond_discrete_normal[][MAXDATAREP], double pcond_discrete_altered[][MAXDATAREP], double pprior_semendiag[], int p_semendiagtotal[], int matched[])
 {
-    //counter i, j, k
+    /**********************************************************************************
+    1. calculate discrete feature 1,3-8 conditional probabilities 
+    2. calculate total actual normal and altered outcome
+    3. calculate mean for continuous feature 2 and 9
+    4. calculate variance for continuous feature 2 and 9
+    6. calculate prior probabilities for normal and altered outcome
+    **********************************************************************************/
+
+    //counter i, a
     int i,a;
-    //initialize array with all entries to zero
 
     for(i=0; i<=*trainingPercentage-1;++i)
     {
+        //compute conditional probability for first loop
         condprob_firstloop(datarep_discfeat,pcond_discrete_normal,pcond_discrete_altered,trainingFeature,trainingOutput,&i,p_semendiagtotal,mean,matched);
     }
 
@@ -59,6 +67,7 @@ void trainData(int *trainingPercentage, FEATINPUT *trainingFeature, int *trainin
         nozeroprob(pcond_discrete_altered,6,5,p_semendiagtotal,ALTERED);
     }
 
+    //compute mean: divide numerator by denominator to complete cal
     mean[NORMAL][0] /= p_semendiagtotal[NORMAL];   //normal f2
     mean[NORMAL][1] /= p_semendiagtotal[NORMAL];   //normal f9
     mean[ALTERED][0] /= p_semendiagtotal[ALTERED];   //altered f2
@@ -66,13 +75,22 @@ void trainData(int *trainingPercentage, FEATINPUT *trainingFeature, int *trainin
 
     for(i=0; i<=*trainingPercentage-1;++i)
     {
+        //compute conditional probability for second loop
         condprob_secondloop(mean, variance, &i, trainingFeature, trainingOutput);
     }
+
+    /***********************************************************
+    1.divide all numerators for mean by total actual outcome
+    2. calculate prior probability
+    ***********************************************************/
+
+    //compute variance: divide numerator by denominator to complete cal
     variance[NORMAL][0] /= (p_semendiagtotal[NORMAL]-1);   //normal f2
     variance[NORMAL][1] /= (p_semendiagtotal[NORMAL]-1);   //normal f9
     variance[ALTERED][0] /= (p_semendiagtotal[ALTERED]-1);   //altered f2
     variance[ALTERED][1] /= (p_semendiagtotal[ALTERED]-1);   //altered f9
 
+    //cal prior probabilities for normal and altered
     pprior_semendiag[0] = (double) p_semendiagtotal[NORMAL] / *trainingPercentage;
     pprior_semendiag[1] = (double) p_semendiagtotal[ALTERED] / *trainingPercentage;
     

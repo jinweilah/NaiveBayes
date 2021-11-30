@@ -43,45 +43,56 @@ int main()
 
     static char *trainingName ={"Training"};
     static char *testingName ={"Testing"};  
+    //four classes of confusion matrix
     int confusionMatrix[4];
     double errorprob_trainingset, errorprob_testingset; 
     // double trainingerrorprob[5], testingerrorprob[5];
 
+    //start iteration from split 50:50 ratio
     int trainingPercentage = 50;
     int testingPercentage = 50;
     int iteration_set;
 
     printf("\nNB classifier training...");
     printf(BOLDGREEN "\n\n========= NB Classifier Confusion Matrix =========" RESET);
+    //iterate 5 times from 50:50 to 90:10 training:testing
     for(iteration_set = 0;iteration_set<5;++iteration_set)
     {
         double mean[2][2]={0},variance[2][2]={0},pprior_semendiag[2]={0};
         int p_semendiagtotal[2]={0};
-        int matched[DISCFEATNUM]={0};
+        int matched[DISCFEATNUM]={0};   //match algo of discrete 7 feature to compute conditional probabilities and posterior probabiliies
         double pcond_discrete_normal[DISCFEATNUM][MAXDATAREP]={0},pcond_discrete_altered[DISCFEATNUM][MAXDATAREP]={0};
 
-        // dynamically memory allocate for struct array of size
+        // dynamically memory allocate for arrays
         trainingFeature = calloc(trainingPercentage, sizeof(FEATINPUT));
         trainingOutput = calloc(trainingPercentage, sizeof(int));
         testingFeature = calloc(testingPercentage, sizeof(FEATINPUT));
         testingOutput = calloc(testingPercentage, sizeof(int));
 
         readText(trainingFeature, trainingOutput, testingFeature, testingOutput, &trainingPercentage, &testingPercentage);
+
+        //NB classifer training
         trainData(&trainingPercentage, trainingFeature, trainingOutput, mean, variance, datarep_discfeat, pcond_discrete_normal, pcond_discrete_altered, pprior_semendiag, p_semendiagtotal, matched);
         
         predictData(&trainingPercentage, trainingFeature, trainingOutput, datarep_discfeat, pcond_discrete_normal, pcond_discrete_altered, mean, variance, pprior_semendiag, matched, confusionMatrix, &errorprob_trainingset);
+        
+        //print confusion matrix and error probability for training set
         printConfusionMatrix(trainingName, &trainingPercentage, confusionMatrix, &errorprob_trainingset);
         // trainingerrorprob[iteration_set] = errorprob_trainingset;
 
         predictData(&testingPercentage, testingFeature, testingOutput, datarep_discfeat, pcond_discrete_normal, pcond_discrete_altered, mean, variance, pprior_semendiag, matched, confusionMatrix, &errorprob_testingset);
+        
+        //print confusion matrix and error probability for testing set
         printConfusionMatrix(testingName, &testingPercentage, confusionMatrix, &errorprob_testingset);
         // testingerrorprob[iteration_set] = errorprob_testingset;
 
+        //frees the dynamically allocated memory 
         free(trainingFeature);
         free(trainingOutput);
         free(testingFeature);
         free(testingOutput);
 
+        //increment training:testing by 10 for next iteration
         trainingPercentage+=10;
         testingPercentage-=10;
     }
