@@ -13,13 +13,13 @@ int main()
     FEATINPUT *trainingFeature,*testingFeature;
     int *trainingOutput,*testingOutput;   
     FEATINPUT *datarep_discfeat = calloc(MAXDATAREP, sizeof(FEATINPUT));
-    datarep_discfeat[0].f1=-1;datarep_discfeat[1].f1=-0.33;datarep_discfeat[2].f1=0.33;datarep_discfeat[3].f1=1;
-    datarep_discfeat[0].f3=0;datarep_discfeat[1].f3=1;
-    datarep_discfeat[0].f4=0;datarep_discfeat[1].f4=1;
-    datarep_discfeat[0].f5=0;datarep_discfeat[1].f5=1;
-    datarep_discfeat[0].f6=-1;datarep_discfeat[1].f6=0;datarep_discfeat[2].f6=1;
-    datarep_discfeat[0].f7=0.2;datarep_discfeat[1].f7=0.4;datarep_discfeat[2].f7=0.6;datarep_discfeat[3].f7=0.8;datarep_discfeat[4].f7=1;
-    datarep_discfeat[0].f8=-1;datarep_discfeat[1].f8=0;datarep_discfeat[2].f8=1;
+    datarep_discfeat[NORMAL].f1=-1;datarep_discfeat[ALTERED].f1=-0.33;datarep_discfeat[2].f1=0.33;datarep_discfeat[3].f1=1;
+    datarep_discfeat[NORMAL].f3=0;datarep_discfeat[ALTERED].f3=1;
+    datarep_discfeat[NORMAL].f4=0;datarep_discfeat[ALTERED].f4=1;
+    datarep_discfeat[NORMAL].f5=0;datarep_discfeat[ALTERED].f5=1;
+    datarep_discfeat[NORMAL].f6=-1;datarep_discfeat[ALTERED].f6=0;datarep_discfeat[2].f6=1;
+    datarep_discfeat[NORMAL].f7=0.2;datarep_discfeat[ALTERED].f7=0.4;datarep_discfeat[2].f7=0.6;datarep_discfeat[3].f7=0.8;datarep_discfeat[4].f7=1;
+    datarep_discfeat[NORMAL].f8=-1;datarep_discfeat[ALTERED].f8=0;datarep_discfeat[2].f8=1;
 
     static char *trainingName ={"Training"};
     static char *testingName ={"Testing"};  

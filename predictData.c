@@ -36,22 +36,22 @@ void predictData(int *datasetPercentage, FEATINPUT *datasetFeature, int *dataset
             postprob_altered_train[i]*=pcond_discrete_altered[m][matched[m]];
         }
 
-        zscore = (((datasetFeature+i)->f2- mean[0][0])/(sqrt(variance[0][0])));
+        zscore = (((datasetFeature+i)->f2- mean[NORMAL][0])/(sqrt(variance[NORMAL][0])));
         postprob_normal_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
         // printf("\n%lf", zscore);
-        zscore = (((datasetFeature+i)->f9- mean[0][1])/(sqrt(variance[0][1])));
+        zscore = (((datasetFeature+i)->f9- mean[NORMAL][1])/(sqrt(variance[NORMAL][1])));
         postprob_normal_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
-        postprob_normal_train[i]*= pprior_semendiag[0];
+        postprob_normal_train[i]*= pprior_semendiag[NORMAL];
                 // testing1=postprob_normal_train[i];
                 // printf("\nrwoth%d read out %lf", i, testing1);
         
         //ALTERED
-        zscore = (((datasetFeature+i)->f2- mean[1][0])/(sqrt(variance[1][0])));
+        zscore = (((datasetFeature+i)->f2- mean[ALTERED][0])/(sqrt(variance[ALTERED][0])));
         postprob_altered_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
 
-        zscore = (((datasetFeature+i)->f9- mean[1][1])/(sqrt(variance[1][1])));
+        zscore = (((datasetFeature+i)->f9- mean[ALTERED][1])/(sqrt(variance[ALTERED][1])));
         postprob_altered_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
-        postprob_altered_train[i]*= pprior_semendiag[1];
+        postprob_altered_train[i]*= pprior_semendiag[ALTERED];
         log(postprob_normal_train[i]);
         log(postprob_altered_train[i]);
 

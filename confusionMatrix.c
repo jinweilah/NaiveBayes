@@ -10,19 +10,19 @@ void confMatrixFunc(int *predictedY, int *output, int *matrix, int *datasetPerce
 
     for(int i=0;i<=(*datasetPercentage-1);i++)
     {
-        if(predictedY[i]==0 && output[i]==0)// True Negative 
+        if(predictedY[i]==NORMAL && output[i]==NORMAL)// True Negative 
         {
             matrix[0] += 1;
         }
-        else if (predictedY[i]==1 && output[i]==1) // True Positive 
+        else if (predictedY[i]==ALTERED && output[i]==ALTERED) // True Positive 
         {
             matrix[1] += 1;
         }
-        else if (predictedY[i]==0 && output[i]==1) // False Negative 
+        else if (predictedY[i]==NORMAL && output[i]==ALTERED) // False Negative 
         {
             matrix[2] += 1;
         }
-        else if (predictedY[i]==1 && output[i]==0) // False Positive 
+        else if (predictedY[i]==ALTERED && output[i]==NORMAL) // False Positive 
         {
              matrix[3] += 1;
         }

@@ -19,8 +19,8 @@ void condprob_firstloop(FEATINPUT *datarep_discfeat, double pcond_discrete_norma
         }
         p_semendiagtotal[0]+=1;
         
-        mean[0][0] += (trainingFeature+*i)->f2;
-        mean[0][1] += (trainingFeature+*i)->f9;
+        mean[NORMAL][0] += (trainingFeature+*i)->f2;
+        mean[NORMAL][1] += (trainingFeature+*i)->f9;
     }
     else    //==ALTERED
     {
@@ -29,8 +29,8 @@ void condprob_firstloop(FEATINPUT *datarep_discfeat, double pcond_discrete_norma
             pcond_discrete_altered[m][matched[m]]+=1;
         }
         p_semendiagtotal[1]+=1;
-        mean[1][0] += (trainingFeature+*i)->f2;
-        mean[1][1] += (trainingFeature+*i)->f9;
+        mean[ALTERED][0] += (trainingFeature+*i)->f2;
+        mean[ALTERED][1] += (trainingFeature+*i)->f9;
     }
 }
 
@@ -43,13 +43,13 @@ void condprob_secondloop(double mean[][2], double variance[][2], int *i, FEATINP
 
     if (trainingOutput[*i]==NORMAL)
     {
-        variance[0][0] += pow(((trainingFeature+*i)->f2 - mean[0][0]), 2);
-        variance[0][1] += pow(((trainingFeature+*i)->f9 - mean[0][1]), 2);
+        variance[NORMAL][0] += pow(((trainingFeature+*i)->f2 - mean[NORMAL][0]), 2);
+        variance[NORMAL][1] += pow(((trainingFeature+*i)->f9 - mean[NORMAL][1]), 2);
     }
     else    //==ALTERED
     {
-        variance[1][0] += pow(((trainingFeature+*i)->f2 - mean[1][0]), 2);
-        variance[1][1] += pow(((trainingFeature+*i)->f9 - mean[1][1]), 2);
+        variance[ALTERED][0] += pow(((trainingFeature+*i)->f2 - mean[ALTERED][0]), 2);
+        variance[ALTERED][1] += pow(((trainingFeature+*i)->f9 - mean[ALTERED][1]), 2);
     }
 }
 

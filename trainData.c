@@ -59,21 +59,21 @@ void trainData(int *trainingPercentage, FEATINPUT *trainingFeature, int *trainin
         nozeroprob(pcond_discrete_altered,6,5,p_semendiagtotal,ALTERED);
     }
 
-    mean[0][0] /= p_semendiagtotal[0];   //normal f2
-    mean[0][1] /= p_semendiagtotal[0];   //normal f9
-    mean[1][0] /= p_semendiagtotal[1];   //altered f2
-    mean[1][1] /= p_semendiagtotal[1];   //altered f9
+    mean[NORMAL][0] /= p_semendiagtotal[NORMAL];   //normal f2
+    mean[NORMAL][1] /= p_semendiagtotal[NORMAL];   //normal f9
+    mean[ALTERED][0] /= p_semendiagtotal[ALTERED];   //altered f2
+    mean[ALTERED][1] /= p_semendiagtotal[ALTERED];   //altered f9
 
     for(i=0; i<=*trainingPercentage-1;++i)
     {
         condprob_secondloop(mean, variance, &i, trainingFeature, trainingOutput);
     }
-    variance[0][0] /= (p_semendiagtotal[0]-1);   //normal f2
-    variance[0][1] /= (p_semendiagtotal[0]-1);   //normal f9
-    variance[1][0] /= (p_semendiagtotal[1]-1);   //altered f2
-    variance[1][1] /= (p_semendiagtotal[1]-1);   //altered f9
+    variance[NORMAL][0] /= (p_semendiagtotal[NORMAL]-1);   //normal f2
+    variance[NORMAL][1] /= (p_semendiagtotal[NORMAL]-1);   //normal f9
+    variance[ALTERED][0] /= (p_semendiagtotal[ALTERED]-1);   //altered f2
+    variance[ALTERED][1] /= (p_semendiagtotal[ALTERED]-1);   //altered f9
 
-    pprior_semendiag[0] = (double) p_semendiagtotal[0] / *trainingPercentage;
-    pprior_semendiag[1] = (double) p_semendiagtotal[1] / *trainingPercentage;
+    pprior_semendiag[0] = (double) p_semendiagtotal[NORMAL] / *trainingPercentage;
+    pprior_semendiag[1] = (double) p_semendiagtotal[ALTERED] / *trainingPercentage;
     
 }
