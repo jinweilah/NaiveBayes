@@ -69,17 +69,20 @@ int main()
         testingFeature = calloc(testingPercentage, sizeof(FEATINPUT));
         testingOutput = calloc(testingPercentage, sizeof(int));
 
+        // read data from textfile into arrays
         readText(trainingFeature, trainingOutput, testingFeature, testingOutput, &trainingPercentage, &testingPercentage);
 
         //NB classifer training
         trainData(&trainingPercentage, trainingFeature, trainingOutput, mean, variance, datarep_discfeat, pcond_discrete_normal, pcond_discrete_altered, pprior_semendiag, p_semendiagtotal, matched);
         
+        //Get confusion matrix value and error probability for training set
         predictData(&trainingPercentage, trainingFeature, trainingOutput, datarep_discfeat, pcond_discrete_normal, pcond_discrete_altered, mean, variance, pprior_semendiag, matched, confusionMatrix, &errorprob_trainingset);
         
         //print confusion matrix and error probability for training set
         printConfusionMatrix(trainingName, &trainingPercentage, confusionMatrix, &errorprob_trainingset);
         trainingerrorprob[iteration_set] = errorprob_trainingset;
 
+        //Get confusion matrix value and error probability for training set
         predictData(&testingPercentage, testingFeature, testingOutput, datarep_discfeat, pcond_discrete_normal, pcond_discrete_altered, mean, variance, pprior_semendiag, matched, confusionMatrix, &errorprob_testingset);
         
         //print confusion matrix and error probability for testing set
