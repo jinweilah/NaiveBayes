@@ -31,8 +31,8 @@ int main()
     int testingPercentage = 50;
     int iteration_set;
 
-    printf("\nNB classifer training...");
-    printf(BOLDGREEN "\n\n========= Confusion Matrix NB Classifer =========" RESET);
+    printf("\nNB classifier training...");
+    printf(BOLDGREEN "\n\n========= NB Classifier Confusion Matrix =========" RESET);
     for(iteration_set = 0;iteration_set<5;++iteration_set)
     {
         double mean[2][2]={0},variance[2][2]={0},pprior_semendiag[2]={0};
