@@ -19,17 +19,20 @@ void trainData(int *trainingPercentage, FEATINPUT *trainingFeature, int *trainin
         //compute conditional probability for first loop
         condprob_firstloop(datarep_discfeat,pcond_discrete_normal,pcond_discrete_altered,trainingFeature,trainingOutput,&i,p_semendiagtotal,mean,matched);
     }
-
+//Check if feature 1 array have any 0 values
     if(pcond_discrete_normal[0][0]==0 || pcond_discrete_normal[0][1]==0 || pcond_discrete_normal[0][2]==0 || pcond_discrete_normal[0][3]==0 || pcond_discrete_altered[0][0]==0 || pcond_discrete_altered[0][1]==0 || pcond_discrete_altered[0][2]==0 || pcond_discrete_altered[0][3]==0)
     {
+        // If yes go to laplace smoothening function
         laplace(pcond_discrete_normal,0,4,p_semendiagtotal,NORMAL);
         laplace(pcond_discrete_altered,0,4,p_semendiagtotal,ALTERED);
     }
     else
     {
+        // If no go to nozeroprob function to do normal conditional probability calculation 
         nozeroprob(pcond_discrete_normal,0,4,p_semendiagtotal,NORMAL);
         nozeroprob(pcond_discrete_altered,0,4,p_semendiagtotal,ALTERED);
     }
+    //Check if feature 3,4 and 5 array have any 0 values
     for(a=1;a<=3;++a)
     {
         if(pcond_discrete_normal[a][0]==0 || pcond_discrete_normal[a][1]==0 || pcond_discrete_altered[a][0]==0 || pcond_discrete_altered[a][1]==0)
@@ -43,6 +46,7 @@ void trainData(int *trainingPercentage, FEATINPUT *trainingFeature, int *trainin
             nozeroprob(pcond_discrete_altered,a,2,p_semendiagtotal,ALTERED);
         }
     }
+    //Check if feature 6 and 8 array have any 0 values
     for(a=4;a<=6;a+=2)
     {
         if(pcond_discrete_normal[a][0]==0 || pcond_discrete_normal[a][1]==0 || pcond_discrete_normal[a][2]==0 || pcond_discrete_altered[a][0]==0 || pcond_discrete_altered[a][1]==0 || pcond_discrete_altered[a][2]==0)
@@ -56,6 +60,7 @@ void trainData(int *trainingPercentage, FEATINPUT *trainingFeature, int *trainin
             nozeroprob(pcond_discrete_altered,a,3,p_semendiagtotal,ALTERED);
         }
     }
+    //Check if feature 7 array have any 0 values
     if(pcond_discrete_normal[6][0]==0 || pcond_discrete_normal[6][1]==0 || pcond_discrete_normal[6][2]==0 || pcond_discrete_normal[6][3]==0 || pcond_discrete_normal[6][4]==0 || pcond_discrete_altered[6][0]==0 || pcond_discrete_altered[6][1]==0 || pcond_discrete_altered[6][2]==0 || pcond_discrete_altered[6][3]==0 || pcond_discrete_altered[6][4]==0)
     {
         laplace(pcond_discrete_normal,6,5,p_semendiagtotal,NORMAL);
