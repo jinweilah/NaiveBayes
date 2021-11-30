@@ -8,7 +8,7 @@ void trainData(int *trainingPercentage, FEATINPUT *trainingFeature, int *trainin
     2. calculate total actual normal and altered outcome
     3. calculate mean for continuous feature 2 and 9
     4. calculate variance for continuous feature 2 and 9
-    6. calculate prior probabilities for normal and altered outcome
+    5. calculate prior probabilities for normal and altered outcome
     **********************************************************************************/
 
     //counter i, a

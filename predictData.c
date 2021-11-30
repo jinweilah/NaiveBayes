@@ -37,7 +37,7 @@ void predictData(int *datasetPercentage, FEATINPUT *datasetFeature, int *dataset
 
         for(m=0;m<=DISCFEATNUM-1;++m)
         {
-            //computing posterior probalility prediction for matched 7 discrete feature into posterior prob array for normal
+            //computing posterior probalility prediction for matched 7 discrete feature into posterior prob array for altered
             postprob_altered_train[i]*=pcond_discrete_altered[m][matched[m]];
         }
 
