@@ -70,9 +70,11 @@ void predictData(int *datasetPercentage, FEATINPUT *datasetFeature, int *dataset
             predictedY[i]=1;
         }
     }
+/* Go to geterror function to get the error probability */
     geterror(predictedY,datasetOutput,datasetPercentage,errorprob_dataset);
+/* Go to confMatrixFunc function get get the confusion matrix table */
     confMatrixFunc(predictedY,datasetOutput,confusionMatrix,datasetPercentage);
-
+/* Free the calloc allocated memory */
     free(postprob_normal_train);
     free(postprob_altered_train);
     free(predictedY);
