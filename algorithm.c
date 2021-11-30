@@ -108,7 +108,8 @@ void match_indicator(int matched[], FEATINPUT *datasetFeature, int *i, FEATINPUT
         d_indicator+=1;
     }
 }
-
+/* Laplace smoothing function where we add 1 to everything for normal and divide by the total number of normal plus the number of 1s added in to get the conditional probability*/
+/* Repeat for altered also */
 void laplace(double pcond_discrete[][MAXDATAREP], int pcond_rownum, int datarep_colnum, int p_semendiagtotal[], int normOrAlt)
 {
     int n;
@@ -117,7 +118,7 @@ void laplace(double pcond_discrete[][MAXDATAREP], int pcond_rownum, int datarep_
         pcond_discrete[pcond_rownum][n]=(pcond_discrete[pcond_rownum][n]+1)/(p_semendiagtotal[normOrAlt]+datarep_colnum);
     }
 }
-
+/* Normal conditional probability method */
 void nozeroprob(double pcond_discrete[][MAXDATAREP], int pcond_rownum, int datarep_colnum, int p_semendiagtotal[], int normOrAlt)
 {
     int n;

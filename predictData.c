@@ -35,27 +35,32 @@ void predictData(int *datasetPercentage, FEATINPUT *datasetFeature, int *dataset
         {
             postprob_altered_train[i]*=pcond_discrete_altered[m][matched[m]];
         }
-
+/* Using standard gaussian distribution to get conditional probability of feature 2 (Normal) */
         zscore = (((datasetFeature+i)->f2- mean[NORMAL][0])/(sqrt(variance[NORMAL][0])));
+/* Multipy in the feature 2 (Normal) conditional probability into the posterior probability (Normal) */
         postprob_normal_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
-        // printf("\n%lf", zscore);
+/* Using standard gaussian distribution to get conditional probability of feature 9 (Normal) */       
         zscore = (((datasetFeature+i)->f9- mean[NORMAL][1])/(sqrt(variance[NORMAL][1])));
+/* Multipy in the feature 9 (Normal) conditional probability into the posterior probability (Normal) */
         postprob_normal_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
+/* Multipy in the Normal prior probability into the posterior probability (Normal) */
         postprob_normal_train[i]*= pprior_semendiag[NORMAL];
-                // testing1=postprob_normal_train[i];
-                // printf("\nrwoth%d read out %lf", i, testing1);
-        
-        //ALTERED
+/* Using standard gaussian distribution to get conditional probability of feature 2 (Altered) */
         zscore = (((datasetFeature+i)->f2- mean[ALTERED][0])/(sqrt(variance[ALTERED][0])));
+/* Multipy in the feature 2 (Altered) conditional probability into the posterior probability (Altered) */
         postprob_altered_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
-
+/* Using standard gaussian distribution to get conditional probability of feature 9 (Altered) */
         zscore = (((datasetFeature+i)->f9- mean[ALTERED][1])/(sqrt(variance[ALTERED][1])));
+/* Multipy in the feature 9 (Altered) conditional probability into the posterior probability (Altered) */
         postprob_altered_train[i]*=(1/sqrt(2*PI))*expl(-0.5*pow(zscore,2));
+/* Multipy in the Altered prior probability into the posterior probability (Altered) */
         postprob_altered_train[i]*= pprior_semendiag[ALTERED];
+/* Log base e the posterior probability to prevent underflow for Normal and Altered */
         log(postprob_normal_train[i]);
         log(postprob_altered_train[i]);
-
+/* Compare the difference of posterior probability for Normal and Altered */
         diff = postprob_normal_train[i] - postprob_altered_train[i];
+/* If difference more than or equal to 0 put value 0 into the predictedY array else put value 1 */
         if(diff >= 0)
         {
             predictedY[i]=0;
