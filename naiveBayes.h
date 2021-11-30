@@ -32,8 +32,8 @@ void condprob_firstloop(FEATINPUT *datarep_discfeat, double pcond_discrete_norma
 void condprob_secondloop(double mean[][2], double variance[][2], int *i, FEATINPUT *trainingFeature, int *trainingOutput);
 void laplace(double pcond_discrete[][MAXDATAREP], int pcond_rownum, int datarep_colnum, int p_semendiagtotal[], int normOrAlt);
 void nozeroprob(double pcond_discrete[][MAXDATAREP], int pcond_rownum, int datarep_colnum, int p_semendiagtotal[], int normOrAlt);
-void predictData(int *datasetPercentage, FEATINPUT *datasetFeature, int *datasetOutput, FEATINPUT *datarep_discfeat, double pcond_discrete_normal[][MAXDATAREP],  double pcond_discrete_altered[][MAXDATAREP], double mean[][2], double variance[][2], double pprior_semendiag[], int matched[], int confusionMatrix[], double *errorprob_dataset);
 void match_indicator(int matched[], FEATINPUT *datasetFeature, int *i, FEATINPUT datarep_discfeature[]);
+void predictData(int *datasetPercentage, FEATINPUT *datasetFeature, int *datasetOutput, FEATINPUT *datarep_discfeat, double pcond_discrete_normal[][MAXDATAREP],  double pcond_discrete_altered[][MAXDATAREP], double mean[][2], double variance[][2], double pprior_semendiag[], int matched[], int confusionMatrix[], double *errorprob_dataset);
 void geterror(int *predictedY, int *output, int *trainingpercentage,double *errorprob_dataset);
 void confMatrixFunc(int *predictedY, int *output, int *matrix, int *datasetPercentage);
 void printConfusionMatrix(char *setName, int *datasetPercentage, int *confusionMatrix, double *errorprob_dataset);
