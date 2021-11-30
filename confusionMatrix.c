@@ -10,19 +10,19 @@ void confMatrixFunc(int *predictedY, int *output, int *matrix, int *datasetPerce
 
     for(int i=0;i<=(*datasetPercentage-1);i++)
     {
-        if(predictedY[i]==NORMAL && output[i]==NORMAL)// True Negative 
+        if(predictedY[i]==ALTERED && output[i]==ALTERED)// True Positive
         {
             matrix[0] += 1;
         }
-        else if (predictedY[i]==ALTERED && output[i]==ALTERED) // True Positive 
+        else if (predictedY[i]==NORMAL && output[i]==NORMAL) // True Negative 
         {
             matrix[1] += 1;
         }
-        else if (predictedY[i]==NORMAL && output[i]==ALTERED) // False Negative 
+        else if (predictedY[i]==ALTERED && output[i]==NORMAL) // False Positive 
         {
             matrix[2] += 1;
         }
-        else if (predictedY[i]==ALTERED && output[i]==NORMAL) // False Positive 
+        else if (predictedY[i]==NORMAL && output[i]==ALTERED) // False Negative
         {
              matrix[3] += 1;
         }
@@ -33,7 +33,7 @@ void printConfusionMatrix(char *setName, int *datasetPercentage, int *confusionM
 {
     printf(BOLDBLACK "\n\nConfusion Matrix for %d %s set",*datasetPercentage,setName);
     printf("" RESET);
-    printf("\nTrue Positive  : %d \nFalse Positive : %d \nTrue Negative  : %d \nFalse Negative : %d ", confusionMatrix[0],confusionMatrix[1],confusionMatrix[2],confusionMatrix[3]);
+    printf("\nTrue Positive  : %d \nTrue Negative : %d \nFalse Positive  : %d \nFalse Negative : %d ", confusionMatrix[0],confusionMatrix[1],confusionMatrix[2],confusionMatrix[3]);
     printf("\n-------------------");
     printf("\nError probability: %lf",*errorprob_dataset);
 }
