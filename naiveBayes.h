@@ -8,10 +8,10 @@
 #define NORMAL 0
 #define ALTERED 1
 #define PI 3.141592
-#define BOLDBLACK "\033[1m\033[30m" //bold black printing color
-#define BOLDGREEN "\033[1m\033[32m" //bold green printing color
-#define BOLDRED "\033[1m\033[31m"   //bold red printing color
-#define RESET "\033[0m"             //reset printing color
+#define BOLDBLACK "\033[1m\033[30m" //black print colour
+#define BOLDGREEN "\033[1m\033[32m" //green print colour
+#define BOLDRED "\033[1m\033[31m"   //red print colour
+#define RESET "\033[0m"             //reset print colour
 
 typedef struct 
 {
