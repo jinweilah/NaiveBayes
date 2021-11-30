@@ -4,14 +4,34 @@
 #include <time.h>
 #include "naiveBayes.h"
 
+/********************************************************
+9 feature/members of struct array:
+.f1=Season of analysis
+.f2=Age of Analysis
+.f3=Childish Disease
+.f4=Accident or serious trauma
+.f5=Surgical Intervention
+.f6=High fevers in last year
+.f7=Frequency of alcohol consumption
+.f8=Smoking Habit
+.f9=Number of hours spent sitting per day
+
+Outcome in output array:
+[0]=Semen Diagnosis Normal
+[1]=Semen Diagnosis Altered
+********************************************************/
+
+/************************************************Navie Bayes Classifier*****************************************************************/
+
 int main()
 {
     clock_t start, elapsed;
     float secs;
-    start = clock(); //start record current time 
+    start = clock(); //start timing
 
     FEATINPUT *trainingFeature,*testingFeature;
     int *trainingOutput,*testingOutput;   
+    //create dynamic struct array for data representation of discrete feature 1,3-8
     FEATINPUT *datarep_discfeat = calloc(MAXDATAREP, sizeof(FEATINPUT));
     datarep_discfeat[NORMAL].f1=-1;datarep_discfeat[ALTERED].f1=-0.33;datarep_discfeat[2].f1=0.33;datarep_discfeat[3].f1=1;
     datarep_discfeat[NORMAL].f3=0;datarep_discfeat[ALTERED].f3=1;
@@ -67,7 +87,7 @@ int main()
     }
     free(datarep_discfeat);
 
-    elapsed = (clock() - start) * 1000 / CLOCKS_PER_SEC; //cal difference between current time and start time(in ms)
+    elapsed = (clock() - start) * 1000 / CLOCKS_PER_SEC; //end timing(in ms)
     secs = elapsed / 1000.0;                             //convert ms into seconds
     printf("\n\nTime taken: %.2fseconds(%ldms)\n\n", secs, elapsed);
 
