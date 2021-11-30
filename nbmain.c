@@ -53,7 +53,7 @@ int main()
     int testingPercentage = 50;
     int iteration_set;
 
-    printf("\nNB classifier training...");
+    printf("\nNB classifier...");
     printf(BOLDGREEN "\n\n========= NB Classifier Confusion Matrix =========" RESET);
     //iterate 5 times from 50:50 to 90:10 training:testing
     for(iteration_set = 0;iteration_set<5;++iteration_set)
