@@ -4,5 +4,5 @@
 ======functions======
 training data
 predicting data
-error probabiliies
+error probabilities
 confusion matrix
