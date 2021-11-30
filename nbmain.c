@@ -69,6 +69,7 @@ int main()
         testingFeature = calloc(testingPercentage, sizeof(FEATINPUT));
         testingOutput = calloc(testingPercentage, sizeof(int));
 
+        // read data from textfile into arrays
         readText(trainingFeature, trainingOutput, testingFeature, testingOutput, &trainingPercentage, &testingPercentage);
 
         //NB classifer training
