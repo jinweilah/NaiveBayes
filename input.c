@@ -1,12 +1,12 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "naiveBayes.h"
+
 /********************************************************************/
 /* input.c                                                          */
 /* Defines a readText function included in naiveBayes.h             */
 /* Reads data from textfile "fertility_Diagnosis_Data_Group1_4.txt" */
 /********************************************************************/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "naiveBayes.h"
 
 void readText(FEATINPUT *trainingFeature, int *trainingOutput, FEATINPUT *testingFeature, int *testingOutput, int *trainingPercentage, int *testingPercentage)
 {

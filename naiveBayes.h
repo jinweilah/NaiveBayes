@@ -38,4 +38,4 @@ void predictData(int *datasetPercentage, FEATINPUT *datasetFeature, int *dataset
 void geterror(int *predictedY, int *output, int *trainingpercentage,double *errorprob_dataset);
 void confMatrixFunc(int *predictedY, int *output, int *matrix, int *datasetPercentage);
 void printConfusionMatrix(char *setName, int *datasetPercentage, int *confusionMatrix, double *errorprob_dataset);
-// void getPlot(double *EPtraining,double *EPtesting);
+void getPlot(double *EPtraining,double *EPtesting);

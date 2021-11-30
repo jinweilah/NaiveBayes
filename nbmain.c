@@ -46,14 +46,14 @@ int main()
     //four classes of confusion matrix
     int confusionMatrix[4];
     double errorprob_trainingset, errorprob_testingset; 
-    // double trainingerrorprob[5], testingerrorprob[5];
+    double trainingerrorprob[5], testingerrorprob[5];
 
     //start iteration from split 50:50 ratio
     int trainingPercentage = 50;
     int testingPercentage = 50;
     int iteration_set;
 
-    printf("\nNB classifier training...");
+    printf("\nNB classifier...");
     printf(BOLDGREEN "\n\n========= NB Classifier Confusion Matrix =========" RESET);
     //iterate 5 times from 50:50 to 90:10 training:testing
     for(iteration_set = 0;iteration_set<5;++iteration_set)
@@ -69,6 +69,7 @@ int main()
         testingFeature = calloc(testingPercentage, sizeof(FEATINPUT));
         testingOutput = calloc(testingPercentage, sizeof(int));
 
+        // read data from textfile into arrays
         readText(trainingFeature, trainingOutput, testingFeature, testingOutput, &trainingPercentage, &testingPercentage);
 
         //NB classifer training
@@ -79,14 +80,14 @@ int main()
         
         //print confusion matrix and error probability for training set
         printConfusionMatrix(trainingName, &trainingPercentage, confusionMatrix, &errorprob_trainingset);
-        // trainingerrorprob[iteration_set] = errorprob_trainingset;
+        trainingerrorprob[iteration_set] = errorprob_trainingset;
 
         //Get confusion matrix value and error probability for training set
         predictData(&testingPercentage, testingFeature, testingOutput, datarep_discfeat, pcond_discrete_normal, pcond_discrete_altered, mean, variance, pprior_semendiag, matched, confusionMatrix, &errorprob_testingset);
         
         //print confusion matrix and error probability for testing set
         printConfusionMatrix(testingName, &testingPercentage, confusionMatrix, &errorprob_testingset);
-        // testingerrorprob[iteration_set] = errorprob_testingset;
+        testingerrorprob[iteration_set] = errorprob_testingset;
 
         //frees the dynamically allocated memory 
         free(trainingFeature);
@@ -104,6 +105,6 @@ int main()
     secs = elapsed / 1000.0;                             //convert ms into seconds
     printf("\n\nTime taken: %.2fseconds(%ldms)\n\n", secs, elapsed);
 
-    // getPlot(trainingerrorprob,testingerrorprob);
+    getPlot(trainingerrorprob,testingerrorprob);
 
 }
